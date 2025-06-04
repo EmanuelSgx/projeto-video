@@ -38,34 +38,30 @@ try {
     $testFileName = 'final-test-' . uniqid() . '.mp4';
     $tempFile = tempnam(sys_get_temp_dir(), 'video_test');
     file_put_contents($tempFile, $testContent);
-    
-    // Test S3 upload
-    $s3Path = $s3Service->store(new \Illuminate\Http\UploadedFile($tempFile, $testFileName, 'video/mp4', null, true));
-    echo "   ✅ File uploaded to S3: {$s3Path}\n";
+      // Test S3 upload
+    $s3Result = $s3Service->store(new \Illuminate\Http\UploadedFile($tempFile, $testFileName, 'video/mp4', null, true));
+    $s3Key = $s3Result['s3_key'];
+    echo "   ✅ File uploaded to S3: {$s3Key}\n";
     
     // Test S3 download
-    $downloadedContent = $s3Service->get($s3Path);
+    $downloadedContent = $s3Service->get($s3Key);
     if ($downloadedContent === $testContent) {
         echo "   ✅ File downloaded from S3 successfully\n";
     } else {
         throw new Exception("Downloaded content doesn't match uploaded content");
     }
-    
-    // Test 2: Database Operations
+      // Test 2: Database Operations
     echo "\n2️⃣ Testing Database Operations...\n";
     $video = Video::create([
-        'title' => 'Final Test Video',
-        'description' => 'Test video for final system validation',
-        'filename' => $testFileName,
-        's3_path' => $s3Path,
+        'uuid' => \Illuminate\Support\Str::uuid(),
+        'original_name' => $testFileName,
+        's3_path' => $s3Result['s3_path'],
+        's3_key' => $s3Result['s3_key'],
         'file_size' => strlen($testContent),
         'duration' => 120,
         'resolution' => '1920x1080',
-        'format' => 'mp4',
-        'fps' => 30.0,
-        'bitrate' => 5000,
-        'codec' => 'h264',
-        'upload_status' => 'completed'
+        'mime_type' => 'video/mp4',
+        'status' => 'uploaded'
     ]);
     echo "   ✅ Video record created in database with ID: {$video->id}\n";
     echo "   ✅ Video UUID: {$video->uuid}\n";
@@ -89,9 +85,8 @@ try {
     $uploadTestFileName = 'upload-service-test-' . uniqid() . '.mp4';
     $uploadTempFile = tempnam(sys_get_temp_dir(), 'upload_test');
     file_put_contents($uploadTempFile, $uploadTestContent);
-    
-    $uploadedFile = new UploadedFile($uploadTempFile, $uploadTestFileName, 'video/mp4', null, true);
-    $uploadedVideo = $uploadService->upload($uploadedFile, 'Upload Service Test', 'Testing the complete upload service');
+      $uploadedFile = new UploadedFile($uploadTempFile, $uploadTestFileName, 'video/mp4', null, true);
+    $uploadedVideo = $uploadService->uploadVideo($uploadedFile);
     
     echo "   ✅ Video uploaded via VideoUploadService\n";
     echo "   ✅ Uploaded video ID: {$uploadedVideo->id}\n";

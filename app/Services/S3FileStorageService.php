@@ -59,9 +59,7 @@ class S3FileStorageService implements FileStorageInterface
         } catch (Exception $e) {
             throw new Exception("Failed to upload file to S3: " . $e->getMessage());
         }
-    }
-
-    public function delete(string $key): bool
+    }    public function delete(string $key): bool
     {
         try {
             $this->s3Client->deleteObject([
@@ -71,6 +69,19 @@ class S3FileStorageService implements FileStorageInterface
             return true;
         } catch (Exception $e) {
             return false;
+        }
+    }
+
+    public function get(string $key): string
+    {
+        try {
+            $result = $this->s3Client->getObject([
+                'Bucket' => $this->bucket,
+                'Key' => $key,
+            ]);
+            return $result['Body']->getContents();
+        } catch (Exception $e) {
+            throw new Exception("Failed to get file from S3: " . $e->getMessage());
         }
     }
 

@@ -1,0 +1,185 @@
+{
+    "info": {
+        "name": "API Upload de Vídeos - Laravel",
+        "description": "Collection completa para testar a API de upload de vídeos seguindo os princípios SOLID",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "_postman_id": "video-upload-api",
+        "version": {
+            "major": 1,
+            "minor": 0,
+            "patch": 0
+        }
+    },
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:8000",
+            "type": "string"
+        },
+        {
+            "key": "api_prefix",
+            "value": "/api",
+            "type": "string"
+        },
+        {
+            "key": "video_uuid",
+            "value": "",
+            "type": "string",
+            "description": "UUID do vídeo para reutilização nos testes"
+        }
+    ],
+    "item": [
+        {
+            "name": "1. 📤 Upload de Vídeo",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "if (pm.response.code === 201) {",
+                            "    const response = pm.response.json();",
+                            "    if (response.success && response.data.uuid) {",
+                            "        pm.collectionVariables.set('video_uuid', response.data.uuid);",
+                            "        console.log('UUID salvo: ' + response.data.uuid);",
+                            "    }",
+                            "}"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "video",
+                            "description": "Arquivo de vídeo (.mp4, .mov, .avi, .webm, .wmv) - máximo 100MB",
+                            "type": "file",
+                            "src": []
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{base_url}}{{api_prefix}}/videos",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "videos"]
+                },
+                "description": "Faz upload de um arquivo de vídeo e extrai os metadados automaticamente"
+            },
+            "response": []
+        },
+        {
+            "name": "2. 📋 Listar Todos os Vídeos",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}{{api_prefix}}/videos",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "videos"]
+                },
+                "description": "Lista todos os vídeos com paginação"
+            },
+            "response": []
+        },
+        {
+            "name": "3. 👁️ Visualizar Vídeo Específico",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}{{api_prefix}}/videos/{{video_uuid}}",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "videos", "{{video_uuid}}"]
+                },
+                "description": "Busca um vídeo específico pelo UUID (automaticamente preenchido após upload)"
+            },
+            "response": []
+        },
+        {
+            "name": "4. 🗑️ Deletar Vídeo",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}{{api_prefix}}/videos/{{video_uuid}}",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "videos", "{{video_uuid}}"]
+                },
+                "description": "Remove um vídeo do sistema (S3 + banco de dados)"
+            },
+            "response": []
+        },
+        {
+            "name": "❌ Teste: Upload sem Arquivo",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": []
+                },
+                "url": {
+                    "raw": "{{base_url}}{{api_prefix}}/videos",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "videos"]
+                },
+                "description": "Teste de validação - deve retornar erro 422"
+            },
+            "response": []
+        },
+        {
+            "name": "❌ Teste: Buscar Vídeo Inexistente",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}{{api_prefix}}/videos/uuid-inexistente-123",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "videos", "uuid-inexistente-123"]
+                },
+                "description": "Teste de erro - deve retornar 404"
+            },
+            "response": []
+        }
+    ]
+}

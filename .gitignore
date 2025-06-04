@@ -1,26 +1,114 @@
-*.log
-.DS_Store
+# Laravel Framework
 .env
 .env.backup
 .env.production
-.phpactor.json
-.phpunit.result.cache
-/.fleet
-/.idea
-/.nova
-/.phpunit.cache
-/.vscode
-/.zed
-/auth.json
-/node_modules
-/public/build
+.env.local
+.env.testing
+/vendor
 /public/hot
 /public/storage
 /storage/*.key
 /storage/pail
-/vendor
+auth.json
+
+# IDE & Editors
+/.idea
+/.vscode
+/.fleet
+/.nova
+/.zed
+.phpactor.json
+
+# Testing & Development
+.phpunit.result.cache
+/.phpunit.cache
+/coverage/
+/tests/coverage/
+
+# Node.js (if needed)
+/node_modules
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Build files
+/public/build
+/public/mix-manifest.json
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Video Upload Specific
+/storage/videos/
+/storage/temp/
+/public/videos/
+/public/uploads/
+*.mp4
+*.mov
+*.avi
+*.webm
+*.wmv
+*.mkv
+*.flv
+*.m4v
+
+# Logs & Debug
+*.log
+/storage/logs/*.log
+/storage/debugbar/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# PHPStorm
+/.idea/
+*.iml
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Vagrant
+/.vagrant
 Homestead.json
 Homestead.yaml
-npm-debug.log
-Thumbs.db
-yarn-error.log
+
+# Laravel Specific
+/bootstrap/cache/*.php
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+
+# Composer
+composer.phar
+composer.lock
+
+# AWS Credentials (extra protection)
+.aws/
+aws-credentials.*
+
+# FFmpeg logs
+ffmpeg*.log
+ffprobe*.log
+
+# Test files
+test-video-*
+test-upload.*
+sample-video.*

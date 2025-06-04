@@ -12,14 +12,14 @@ echo "================================================\n\n";
 echo "1️⃣ Verifying Core System Files...\n";
 
 $coreFiles = [
-    'app/Models/Video.php' => 'Video Model',
-    'app/Services/VideoUploadService.php' => 'Upload Service',
-    'app/Services/S3FileStorageService.php' => 'S3 Storage Service',
-    'app/Http/Controllers/VideoController.php' => 'API Controller',
-    'app/Http/Requests/VideoUploadRequest.php' => 'Upload Validation',
-    'app/Contracts/FileStorageInterface.php' => 'Storage Interface',
-    'app/Contracts/VideoMetadataExtractorInterface.php' => 'Metadata Interface',
-    'app/Contracts/QueueServiceInterface.php' => 'Queue Interface'
+    '../../app/Models/Video.php' => 'Video Model',
+    '../../app/Services/VideoUploadService.php' => 'Upload Service',
+    '../../app/Services/S3FileStorageService.php' => 'S3 Storage Service',
+    '../../app/Http/Controllers/VideoController.php' => 'API Controller',
+    '../../app/Http/Requests/VideoUploadRequest.php' => 'Upload Validation',
+    '../../app/Contracts/FileStorageInterface.php' => 'Storage Interface',
+    '../../app/Contracts/VideoMetadataExtractorInterface.php' => 'Metadata Interface',
+    '../../app/Contracts/QueueServiceInterface.php' => 'Queue Interface'
 ];
 
 foreach ($coreFiles as $file => $description) {
@@ -35,7 +35,7 @@ echo "\n2️⃣ Verifying Configuration...\n";
 
 $configFiles = [
     'config/filesystems.php' => 'S3 Configuration',
-    'routes/api.php' => 'API Routes',
+    '../../routes/api.php' => 'API Routes',
     '.env' => 'Environment Variables'
 ];
 
@@ -91,8 +91,8 @@ if (file_exists('composer.json')) {
 
 // Test 6: Verify API Routes
 echo "\n6️⃣ Checking API Routes Structure...\n";
-if (file_exists('routes/api.php')) {
-    $routeContent = file_get_contents('routes/api.php');
+if (file_exists('../../routes/api.php')) {
+    $routeContent = file_get_contents('../../routes/api.php');
     $expectedRoutes = [
         'videos' => 'Video CRUD routes',
         'upload' => 'Upload endpoint',

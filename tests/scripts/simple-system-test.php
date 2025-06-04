@@ -4,7 +4,7 @@
  * Simple System Test - Video Upload System Validation
  */
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use App\Services\S3FileStorageService;
 use App\Services\MockVideoMetadataExtractor;
@@ -15,7 +15,7 @@ echo "🚀 SIMPLE SYSTEM VALIDATION - Video Upload System\n";
 echo "===============================================\n\n";
 
 // Create Laravel application instance
-$app = require_once __DIR__ . '/bootstrap/app.php';
+$app = require_once __DIR__ . '/../../bootstrap/app.php';
 $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
 
 try {
@@ -84,9 +84,8 @@ try {
     }
       // Test 6: API Routes
     echo "\n6️⃣ Testing API Routes...\n";
-    
-    // Check routes directly from route files
-    $apiRoutesFile = __DIR__ . '/routes/api.php';
+      // Check routes directly from route files
+    $apiRoutesFile = __DIR__ . '/../../routes/api.php';
     if (file_exists($apiRoutesFile)) {
         $apiRoutes = file_get_contents($apiRoutesFile);
         

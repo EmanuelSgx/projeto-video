@@ -1,6 +1,6 @@
 <?php
 
-require_once 'vendor/autoload.php';
+require_once '../../vendor/autoload.php';
 
 use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
@@ -8,7 +8,7 @@ use Aws\Exception\AwsException;
 echo "Iniciando teste...\n";
 
 // Carregar configurações do .env manualmente
-$envFile = file_get_contents('.env');
+$envFile = file_get_contents('../../.env');
 $envLines = explode("\n", $envFile);
 $env = [];
 foreach ($envLines as $line) {

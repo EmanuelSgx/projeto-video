@@ -11,7 +11,7 @@
  * - Queue system integration
  */
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use Illuminate\Foundation\Application;
 use Illuminate\Http\UploadedFile;
@@ -25,7 +25,7 @@ echo "🚀 FINAL SYSTEM VALIDATION - Video Upload System\n";
 echo "================================================\n\n";
 
 // Create Laravel application instance
-$app = require_once __DIR__ . '/bootstrap/app.php';
+$app = require_once __DIR__ . '/../../bootstrap/app.php';
 $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
 
 try {

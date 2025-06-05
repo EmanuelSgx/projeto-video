@@ -5,7 +5,7 @@
 [![AWS S3](https://img.shields.io/badge/AWS-S3-FF9900?logo=amazon-aws&logoColor=white)](https://aws.amazon.com/s3/)
 [![Tests](https://img.shields.io/badge/Tests-7%20passing-green)](./tests)
 
-**Sistema completo para fazer upload de vídeos** - Faça upload de vídeos de forma segura e organize tudo em uma API simples de usar.
+**Sistema completo para fazer upload de vídeos**.
 
 > 💡 **Para iniciantes:** Este sistema permite que você envie vídeos pela internet e os armazene na nuvem (AWS S3) de forma segura e organizada.
 

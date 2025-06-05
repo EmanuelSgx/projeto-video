@@ -127,43 +127,6 @@ FFPROBE_PATH=ffprobe
 QUEUE_CONNECTION=database
 ```
 
-### Configuração AWS S3
-
-1. **Criar bucket S3** na AWS Console
-2. **Configurar CORS** no bucket:
-```json
-[
-  {
-    "AllowedHeaders": ["*"],
-    "AllowedMethods": ["GET", "PUT", "POST", "DELETE"],
-    "AllowedOrigins": ["*"],
-    "ExposeHeaders": []
-  }
-]
-```
-
-3. **Criar usuário IAM** com política:
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "s3:GetObject",
-        "s3:PutObject",
-        "s3:DeleteObject",
-        "s3:ListBucket"
-      ],
-      "Resource": [
-        "arn:aws:s3:::seu-bucket-videos",
-        "arn:aws:s3:::seu-bucket-videos/*"
-      ]
-    }
-  ]
-}
-```
-
 ## 🎯 API Endpoints
 
 ### Base URL: `http://localhost:8000/api`
@@ -296,25 +259,6 @@ curl -X GET "http://127.0.0.1:8000/api/videos/{uuid}" \
 ```bash
 curl -X DELETE "http://127.0.0.1:8000/api/videos/{uuid}" \
   -H "Accept: application/json"
-```
-
-### 🎯 Por que os Headers são Necessários?
-
-#### `Accept: application/json`
-- **Função:** Informa ao Laravel que você espera resposta em JSON
-- **Sem ele:** Laravel pode retornar HTML ou outros formatos
-
-#### `X-Requested-With: XMLHttpRequest`
-- **Função:** Identifica a requisição como chamada AJAX/API
-- **Sem ele:** Laravel pode interpretar como requisição de navegador e retornar 404
-
-O Laravel usa internamente:
-```php
-if ($request->ajax() || $request->wantsJson()) {
-    // Trata como API call - retorna JSON
-} else {
-    // Trata como navegador - pode redirecionar
-}
 ```
 
 ## 📊 Exemplos de Uso
@@ -580,7 +524,7 @@ php artisan key:generate
 
 ```bash
 # Modo de desenvolvimento com reload automático
-php artisan serve --host=0.0.0.0 --port=8000
+php artisan serve
 
 # Executar workers da fila
 php artisan queue:work
@@ -845,36 +789,12 @@ redirect_stderr=true
 stdout_logfile=/path/to/worker.log
 ```
 
-## 📞 Suporte e Contribuição
-
-### Reportar Problemas
-
-1. Verifique o [FAQ](#-faq-e-troubleshooting) primeiro
-2. Consulte os logs: `storage/logs/laravel.log`
-3. Teste com os comandos da seção [Troubleshooting](#-faq-e-troubleshooting)
-4. Crie uma issue com detalhes do problema
-
-### Contribuir
-
-1. Fork o projeto
-2. Crie uma branch: `git checkout -b feature/nova-funcionalidade`
-3. Implemente com testes
-4. Submeta um Pull Request
-
----
-
-## 📄 Licença
-
-Este projeto está licenciado sob a [MIT License](https://opensource.org/licenses/MIT).
-
----
-
 ## 🎉 Status do Projeto
 
 **✅ Sistema 100% funcional e pronto para produção**
 
 ### Funcionalidades Implementadas
-- ✅ **API RESTful completa** - Upload, listagem, visualização e deleção
+- ✅ **API REST completa** - Upload, listagem, visualização e deleção
 - ✅ **Arquitetura SOLID** - Interfaces, injeção de dependências
 - ✅ **Integração AWS S3** - Upload direto para cloud storage
 - ✅ **Validação robusta** - Tipo, tamanho e integridade de arquivos
@@ -882,13 +802,3 @@ Este projeto está licenciado sob a [MIT License](https://opensource.org/license
 - ✅ **Testes automatizados** - Cobertura completa com PHPUnit
 - ✅ **Documentação completa** - Guias detalhados e exemplos
 - ✅ **Collection Postman** - Testes prontos para uso
-
-### Métricas de Qualidade
-- 🧪 **7 testes passando** - 100% de sucesso
-- 📦 **Arquitetura limpa** - Princípios SOLID aplicados
-- 🔒 **Código seguro** - Validação e sanitização adequada
-- 📚 **Bem documentado** - README abrangente e exemplos práticos
-
----
-
-**🎬 Seu sistema de upload de vídeos está pronto para usar! 🚀**

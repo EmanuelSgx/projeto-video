@@ -5,24 +5,25 @@
 [![AWS S3](https://img.shields.io/badge/AWS-S3-FF9900?logo=amazon-aws&logoColor=white)](https://aws.amazon.com/s3/)
 [![Tests](https://img.shields.io/badge/Tests-7%20passing-green)](./tests)
 
-API RESTful robusta para upload, processamento e gerenciamento de vídeos com **arquitetura SOLID** completa e integração com AWS S3.
+**Sistema completo para fazer upload de vídeos** - Faça upload de vídeos de forma segura e organize tudo em uma API simples de usar.
 
-## 📋 Índice
+> 💡 **Para iniciantes:** Este sistema permite que você envie vídeos pela internet e os armazene na nuvem (AWS S3) de forma segura e organizada.
 
-- [🚀 Funcionalidades](#-funcionalidades)
-- [🛠️ Tecnologias](#️-tecnologias)
-- [⚡ Instalação](#-instalação)
-- [⚙️ Configuração](#️-configuração)
-- [🎯 API Endpoints](#-api-endpoints)
-- [📤 Como Testar Upload](#-como-testar-upload)
-  - [🔧 Postman](#-postman)
-  - [💻 Terminal/cURL](#-terminalcurl)
-- [📊 Exemplos de Uso](#-exemplos-de-uso)
-- [🧪 Testes](#-testes)
-- [🏗️ Arquitetura](#️-arquitetura)
-- [📁 Estrutura do Projeto](#-estrutura-do-projeto)
-- [🔧 Comandos Úteis](#-comandos-úteis)
-- [❓ FAQ e Troubleshooting](#-faq-e-troubleshooting)
+## 🚀 O que este sistema faz?
+
+✅ **Upload de vídeos** - Envie vídeos MP4, MOV, AVI e outros formatos  
+✅ **Armazenamento seguro** - Seus vídeos ficam salvos na nuvem AWS  
+✅ **Organização automática** - Lista e organiza todos os vídeos  
+✅ **Informações dos vídeos** - Mostra duração, tamanho e resolução  
+✅ **API completa** - Interface para desenvolvedores
+
+## 📋 Guia Rápido
+
+- [🎯 **Como usar (Postman)**](#-como-testar-upload) ⭐ **Comece aqui!**
+- [⚡ **Instalação simples**](#-instalação)
+- [⚙️ **Configuração básica**](#️-configuração)
+- [🎯 **Todas as funcionalidades**](#-api-endpoints)
+- [❓ **Problemas e soluções**](#-faq-e-troubleshooting)
 
 ## 🚀 Funcionalidades
 
@@ -56,209 +57,142 @@ API RESTful robusta para upload, processamento e gerenciamento de vídeos com **
 
 ## ⚡ Instalação
 
-### Pré-requisitos
-- **PHP 8.2+** com extensões: `gd`, `curl`, `openssl`, `mbstring`
-- **Composer** para gerenciamento de dependências
-- **MySQL** 8.0+ ou compatível
-- **FFmpeg** instalado (opcional, usa Mock se não disponível)
-- **Conta AWS** com bucket S3 configurado
+> 🎯 **Objetivo:** Colocar o sistema funcionando em 5 minutos
 
-### Passo a Passo
+### 📋 Você precisa ter instalado:
+
+- **PHP 8.2+** ([Download aqui](https://www.php.net/downloads))
+- **Composer** ([Download aqui](https://getcomposer.org/download/))
+- **MySQL/XAMPP** ([Download XAMPP](https://www.apachefriends.org/))
+- **Conta AWS** com S3 ([Criar conta](https://aws.amazon.com/pt/s3/))
+
+### 🚀 Instalação em 5 passos:
 
 ```bash
-# 1. Clonar o repositório
-git clone https://github.com/seu-usuario/projeto-video.git
+# 1️⃣ Clone o projeto
+git clone https://github.com/EmanuelSgx/projeto-video.git
 cd projeto-video
 
-# 2. Instalar dependências PHP
+# 2️⃣ Instale as dependências
 composer install
 
-# 3. Configurar ambiente
-cp .env.example .env
+# 3️⃣ Configure o ambiente
+copy .env.example .env
 php artisan key:generate
 
-# 4. Configurar banco de dados (veja seção Configuração)
-# Edite o arquivo .env com suas credenciais
+# 4️⃣ Configure banco de dados (veja próxima seção)
 
-# 5. Executar migrations
+# 5️⃣ Inicie o servidor
 php artisan migrate
-
-# 6. (Opcional) Executar seeders
-php artisan db:seed
-
-# 7. Iniciar servidor de desenvolvimento
 php artisan serve
 ```
 
-O servidor estará disponível em: `http://localhost:8000`
+✅ **Pronto!** Acesse: `http://localhost:8000`
 
 ## ⚙️ Configuração
 
-### Arquivo .env
+> 🎯 **Objetivo:** Configurar banco de dados e AWS em 3 minutos
 
-Copie `.env.example` para `.env` e configure:
+### 1️⃣ Abra o arquivo `.env` e configure:
 
 ```env
-# Aplicação
-APP_NAME="Sistema Upload Vídeos"
-APP_ENV=local
-APP_DEBUG=true
-APP_URL=http://localhost:8000
-
-# Banco de Dados
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
+# 📊 BANCO DE DADOS (MySQL/XAMPP)
 DB_DATABASE=video_upload_db
 DB_USERNAME=root
 DB_PASSWORD=sua_senha
 
-# AWS S3 (OBRIGATÓRIO)
+# ☁️ AWS S3 (OBRIGATÓRIO para upload)
 AWS_ACCESS_KEY_ID=sua_access_key
 AWS_SECRET_ACCESS_KEY=sua_secret_key
 AWS_DEFAULT_REGION=sa-east-1
 AWS_BUCKET=seu-bucket-videos
-
-# FFmpeg (Opcional)
-FFMPEG_PATH=ffmpeg
-FFPROBE_PATH=ffprobe
-
-# Queue System
-QUEUE_CONNECTION=database
 ```
 
-## 🎯 API Endpoints
+### 2️⃣ Como obter credenciais AWS:
 
-### Base URL: `http://localhost:8000/api`
+1. Entre na [AWS Console](https://console.aws.amazon.com/)
+2. Vá em **IAM** → **Users** → **Create User**
+3. Dê permissões de **S3** para o usuário
+4. Copie **Access Key** e **Secret Key**
+5. Crie um **Bucket S3** e anote o nome
 
-| Método | Endpoint | Descrição | Autenticação |
-|--------|----------|-----------|--------------|
-| `POST` | `/videos` | Upload de vídeo | Não |
-| `GET` | `/videos` | Listar todos os vídeos | Não |
-| `GET` | `/videos/{uuid}` | Buscar vídeo específico | Não |
-| `DELETE` | `/videos/{uuid}` | Deletar vídeo | Não |
-| `GET` | `/videos/validate/s3` | Validar conexão S3 | Não |
+### 3️⃣ Finalize a configuração:
 
-### Formatos Aceitos
-- **Tipos:** MP4, MOV, AVI, WEBM, WMV
-- **Tamanho máximo:** 100MB
-- **Content-Type:** `multipart/form-data`
-
-### Headers Recomendados
+```bash
+# Crie o banco de dados
+php artisan migrate
 ```
-Accept: application/json
-Content-Type: multipart/form-data
-```
+
+✅ **Configuração completa!**
+
+## 🎯 O que você pode fazer
+
+> 🎯 **Todas as funcionalidades disponíveis**
+
+| ✨ Ação | 🌐 Endpoint | 📝 Descrição |
+|---------|-------------|--------------|
+| 📤 **Fazer upload** | `POST /api/videos` | Enviar um vídeo |
+| 📋 **Ver todos os vídeos** | `GET /api/videos` | Listar vídeos enviados |
+| 🔍 **Ver um vídeo** | `GET /api/videos/{id}` | Detalhes de um vídeo |
+| 🗑️ **Apagar vídeo** | `DELETE /api/videos/{id}` | Remover vídeo |
+| ✅ **Testar conexão** | `GET /api/videos/validate/s3` | Verificar se está funcionando |
+
+### 📁 Tipos de vídeo aceitos:
+✅ **MP4** | ✅ **MOV** | ✅ **AVI** | ✅ **WEBM** | ✅ **WMV**
+
+### 📏 Limites:
+- **Tamanho máximo:** 100MB por vídeo
+- **URL base:** `http://localhost:8000/api`
 
 ## 📤 Como Testar Upload
 
-### 🔧 Postman
+> 🎯 **Guia passo a passo para enviar seu primeiro vídeo**
 
-#### Configuração Inicial
-1. **Método:** POST
-2. **URL:** `http://127.0.0.1:8000/api/videos`
+### 🔧 Usando Postman (Recomendado)
 
-#### Headers Obrigatórios
-Vá na aba **Headers** e adicione:
+#### 1️⃣ Configure o Postman:
+- **Método:** `POST`
+- **URL:** `http://127.0.0.1:8000/api/videos`
+
+#### 2️⃣ Adicione os Headers necessários:
 ```
 Accept: application/json
 X-Requested-With: XMLHttpRequest
 ```
 
-⚠️ **IMPORTANTE:** NÃO adicione `Content-Type` manualmente! O Postman configura automaticamente como `multipart/form-data` para upload de arquivos.
+> ⚠️ **IMPORTANTE:** NÃO adicione `Content-Type` - o Postman faz isso automaticamente!
 
-#### Body (form-data)
+#### 3️⃣ Selecione o arquivo:
 1. Vá na aba **Body**
-2. Selecione **form-data**
+2. Escolha **form-data**
 3. Adicione um campo:
-   - **Key:** `video` (exatamente assim, minúsculo)
-   - **Tipo:** Selecione **File** (não Text)
-   - **Value:** Clique em "Select Files" e escolha um arquivo de vídeo
+   - **Key:** `video` (tem que ser exatamente assim)
+   - **Tipo:** **File** (não Text!)
+   - **Value:** Clique em "Select Files" e escolha seu vídeo
 
-#### Respostas Esperadas
+#### 4️⃣ Clique em **Send**!
 
-**✅ Sucesso (201 Created):**
+### ✅ Resposta de sucesso:
 ```json
 {
     "success": true,
     "data": {
-        "uuid": "550e8400-e29b-41d4-a716-446655440000",
-        "original_name": "video.mp4",
+        "uuid": "abc-123-def",
+        "original_name": "meu-video.mp4",
         "status": "uploaded"
     },
     "message": "Video uploaded successfully"
 }
 ```
 
-**❌ Erro de Validação (422):**
-```json
-{
-    "message": "Video file is required.",
-    "errors": {
-        "video": ["Video file is required."]
-    }
-}
-```
+### 💻 Usando Terminal (Alternativa):
 
-**❌ Headers Incorretos (404):**
-```json
-{
-    "message": "Not Found"
-}
-```
-
-#### Troubleshooting Postman
-
-| Problema | Solução |
-|----------|---------|
-| Erro 404 | Adicione headers `Accept` e `X-Requested-With` |
-| "Video file is required" | Certifique-se de que o campo se chama `video` e é tipo **File** |
-| Erro 422 (formato) | Verifique se o arquivo é mp4, mov, avi, webm ou wmv |
-| Erro 422 (tamanho) | Use arquivo menor que 100MB |
-
-### 💻 Terminal/cURL
-
-#### Upload de Vídeo
-```bash
+```powershell
 # Windows PowerShell
 curl -X POST "http://127.0.0.1:8000/api/videos" `
   -H "Accept: application/json" `
   -H "X-Requested-With: XMLHttpRequest" `
   -F "video=@C:\caminho\para\video.mp4"
-
-# Linux/macOS
-curl -X POST "http://127.0.0.1:8000/api/videos" \
-  -H "Accept: application/json" \
-  -H "X-Requested-With: XMLHttpRequest" \
-  -F "video=@/caminho/para/video.mp4"
-```
-
-#### Testar Conectividade
-```bash
-# Verificar se a API está respondendo
-curl -X GET "http://127.0.0.1:8000/api/videos" \
-  -H "Accept: application/json"
-```
-
-#### Testar Validação (sem arquivo)
-```bash
-# Deve retornar erro 422
-curl -X POST "http://127.0.0.1:8000/api/videos" \
-  -H "Accept: application/json" \
-  -H "X-Requested-With: XMLHttpRequest"
-```
-
-#### Ver Vídeo Específico
-```bash
-# Substitua {uuid} pelo UUID retornado no upload
-curl -X GET "http://127.0.0.1:8000/api/videos/{uuid}" \
-  -H "Accept: application/json"
-```
-
-#### Deletar Vídeo
-```bash
-curl -X DELETE "http://127.0.0.1:8000/api/videos/{uuid}" \
-  -H "Accept: application/json"
 ```
 
 ## 📊 Exemplos de Uso

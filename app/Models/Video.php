@@ -62,4 +62,47 @@ class Video extends Model
         
         return round($bytes, 2) . ' ' . $units[$i];
     }
+
+    /**
+     * Queue status management methods
+     */
+    public function markAsQueued(): void
+    {
+        $this->update(['status' => 'uploaded']);
+    }
+
+    public function markAsProcessing(): void
+    {
+        $this->update(['status' => 'processing']);
+    }
+
+    public function markAsCompleted(): void
+    {
+        $this->update(['status' => 'processed']);
+    }
+
+    public function markAsFailed(): void
+    {
+        $this->update(['status' => 'failed']);
+    }
+
+    public function isQueued(): bool
+    {
+        return $this->status === 'uploaded';
+    }
+
+    public function isProcessing(): bool
+    {
+        return $this->status === 'processing';
+    }
+
+    public function isCompleted(): bool
+    {
+        return $this->status === 'processed';
+    }
+
+    public function isFailed(): bool
+    {
+        return $this->status === 'failed';
+    }
 }

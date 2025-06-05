@@ -26,7 +26,7 @@ API RESTful robusta para upload, processamento e gerenciamento de vídeos com **
 ### Core Features
 - ✅ **Upload de vídeos** para AWS S3 com validação rigorosa
 - ✅ **Extração de metadados** automática (FFmpeg/Mock)
-- ✅ **API RESTful completa** (CRUD operations)
+- ✅ **API REST completa** (CRUD operations)
 - ✅ **Sistema de filas** para processamento assíncrono
 - ✅ **Validação de arquivos** (tipo, tamanho, integridade)
 - ✅ **UUIDs únicos** para identificação segura

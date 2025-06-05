@@ -1,11 +1,11 @@
 {
     "info": {
-        "name": "API Upload de Vídeos - Laravel",
-        "description": "Collection completa para testar a API de upload de vídeos seguindo os princípios SOLID",
+        "name": "🎬 Video Upload API - Complete Collection",
+        "description": "Collection completa para testar a API de upload de vídeos com Laravel. Inclui todos os endpoints e testes de validação.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "_postman_id": "video-upload-api",
+        "_postman_id": "video-upload-api-complete",
         "version": {
-            "major": 1,
+            "major": 2,
             "minor": 0,
             "patch": 0
         }
@@ -13,7 +13,7 @@
     "variable": [
         {
             "key": "base_url",
-            "value": "http://localhost:8000",
+            "value": "http://127.0.0.1:8000",
             "type": "string"
         },
         {
